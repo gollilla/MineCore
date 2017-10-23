@@ -1,0 +1,7 @@
+name: MineCore
+main: soradore\minecore\main
+version: 1.0
+api: []
+load: POSTWORLD
+author: soradore
+description:
