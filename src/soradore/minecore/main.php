@@ -86,12 +86,12 @@ class main extends PluginBase implements Listener{
         $name = $player->getName();
         if($this->isPlayer($player)){
             $team = $this->getTeam($player);
-            $colors = ['˜a', '˜b'];
+            $colors = ['Â§a', 'Â§b'];
             $tag = $colors[$team];
             $name = "{$tag}{$name}";
         }
         $level = $this->getPlayerLevel($player);
-        $name .= "˜e|˜f ".$level;
+        $name .= "Â§e|Â§f ".$level;
         
         $player->setNameTag($name);
     }    
