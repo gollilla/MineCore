@@ -41,7 +41,7 @@ use pocketmine\math\Vector3;
 class main extends PluginBase implements Listener{
 
     //@var array  $core    core HP 
-    public $core = [];
+    public $core = null;
 
     //@var array  $players team
     public $players = [];
@@ -59,6 +59,7 @@ class main extends PluginBase implements Listener{
         }
         $this->config = new Config($this->getDataFolder().'config.yml', Config::YAML, []);
         $this->api = new API();
+        $this->loadGame();
     }
 
     public function onJoin(PlayerJoinEvent $ev){
@@ -160,5 +161,30 @@ class main extends PluginBase implements Listener{
     public function getPlayers(){
         $array = array_merge($this->players['red'], $this->players['blue']); 
         return $array;
+    }
+
+    public function getData(String $key){
+        if($this->config->exists($key)){
+            return $this->config->get($key);
+        }else{
+            return false; 
+        }
+    }
+
+    public function loadGame(){
+        $hp = $this->getData('hp');
+        $this->setCoreHp($hp);
+        
+    }
+
+    public function setCoreHp($hp){
+        $this->core = ['RED'=>$hp, 'BLUE'=>$hp];
+    }
+
+    pulic function giveFirstItems(Player $player){
+        $items = [
+                  Item::get(),
+                 ];
+        //TODO
     }
 }
