@@ -98,11 +98,11 @@ class main extends PluginBase implements Listener{
 
 
     /**
-     * @param  Player $player 
-     * @param  string $option  Option | 'name' |
-     * @return bool   $return
-     * @return string $return
-     * @return int    $return
+     * @param  Player  $player 
+     * @param  string  $option  Option | 'name' |
+     * @return boolean $return
+     * @return string  $return
+     * @return int     $return
      */
 
     public function getTeam(Player $player, $option = false){
@@ -131,8 +131,8 @@ class main extends PluginBase implements Listener{
 
  
     /**
-     * @param  Player $player
-     * @return bool
+     * @param  Player  $player
+     * @return boolean
      */
 
     public function isPlayer(Player $player){
@@ -143,8 +143,8 @@ class main extends PluginBase implements Listener{
 
 
     /**
-     * @param  Block $block
-     * @return bool
+     * @param  Block   $block
+     * @return boolean
      */ 
 
     public function isJoinBlock(Block $block){
