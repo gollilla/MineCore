@@ -25,11 +25,13 @@ use pocketmine\event\player\QuitEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\block\BlockBreakEvent;
 
-/* NetWork */
-use pocketmine\utils\Utils;
 
 /* Save */
 use pocketmine\utils\Config;
+
+/* Item and Block */
+use pocketmine\item\Item;
+use pocketmine\block\Block;
 
 /* Level and Math */
 use pocketmine\level\Level;
@@ -47,12 +49,16 @@ class main extends PluginBase implements Listener{
     //@var Config $config
     public $config = null;
 
+    //@var API  $api  | Web Api Client |
+    public $api = null;
+
     public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         if(!file_exists($this->getDataFolder()){
             mkdir($this->getDataFolder(), 0744, true);
         }
         $this->config = new Config($this->getDataFolder().'config.yml', Config::YAML, []);
+        $this->api = new API();
     }
 
     public function onJoin(PlayerJoinEvent $ev){
