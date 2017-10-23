@@ -187,4 +187,43 @@ class main extends PluginBase implements Listener{
                  ];
         //TODO
     }
+
+    public function getCoreHp($team){
+        switch($team){
+            case 'RED':
+            case 'red':
+            case 0:
+                $return = $this->core['RED'];
+                break;
+            case 'BLUE':
+            case 'blue':
+            case 1:
+                $return = $this->core['BLUE'];
+                break;
+            default:
+                $return = false;
+         }
+         return $return;
+     }
+
+     public function decreHp($team){
+         switch($team){
+            case 'RED':
+            case 'red':
+            case 0:
+                $hp = $this->getCoreHp(0);
+                --$hp;
+                $this->core['RED'] = $hp;
+                break;
+            case 'BLUE':
+            case 'blue':
+            case 1:
+                $hp = $this->getCoreHp(1);
+                --$hp;
+                $this->core['BLUE'] = $hp;
+                break;
+            default:
+                $return = false;
+         }
+     }
 }
