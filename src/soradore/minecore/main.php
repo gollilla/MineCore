@@ -10,6 +10,11 @@
     *
     *   @author soradore
     *
+    *   ################# Rules ##################
+    *   #                                        #
+    *   #                                        #
+    *   #                                        #
+    *   ##########################################
     **/                                         
 
 namespace soradore\minecore;
@@ -57,7 +62,11 @@ class main extends PluginBase implements Listener{
         if(!file_exists($this->getDataFolder()){
             mkdir($this->getDataFolder(), 0744, true);
         }
-        $this->config = new Config($this->getDataFolder().'config.yml', Config::YAML, []);
+        $this->config = new Config($this->getDataFolder().'config.yml', Config::YAML,
+                                   [
+                                    'hp'=>200, 
+                                    'world'=>'world'
+                                    ]);
         $this->api = new API();
         $this->loadGame();
     }
@@ -107,7 +116,7 @@ class main extends PluginBase implements Listener{
     /**
      * @param  Player  $player 
      * @param  string  $option  Option | 'name' |
-     * @return boolean $return
+     * @return bool    $return
      * @return string  $return
      * @return int     $return
      */
@@ -139,7 +148,7 @@ class main extends PluginBase implements Listener{
  
     /**
      * @param  Player  $player
-     * @return boolean
+     * @return bool
      */
 
     public function isPlayer(Player $player){
@@ -151,7 +160,7 @@ class main extends PluginBase implements Listener{
 
     /**
      * @param  Block   $block
-     * @return boolean
+     * @return bool
      */ 
 
     public function isJoinBlock(Block $block){
@@ -181,7 +190,7 @@ class main extends PluginBase implements Listener{
         $this->core = ['RED'=>$hp, 'BLUE'=>$hp];
     }
 
-    pulic function giveFirstItems(Player $player){
+    pulic function setFirstItems(Player $player){
         $items = [
                   Item::get(),
                  ];
