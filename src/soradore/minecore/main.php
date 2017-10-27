@@ -62,12 +62,34 @@ class main extends PluginBase implements Listener{
         if(!file_exists($this->getDataFolder()){
             mkdir($this->getDataFolder(), 0744, true);
         }
-        $this->config = new Config($this->getDataFolder().'config.yml', Config::YAML,
+        $this->setting = new Config($this->getDataFolder().'setting.yml', Config::YAML,
                                    [
                                     'hp'=>200, 
-                                    'world'=>'world'
+                                    'world'=>'world',
+                                    'USE_WEB_API'=>'off',
                                     ]);
-        $this->api = new API();
+        $this->config = new Config($this->getDataFolder().'config.yml', Config::YAML, 
+                                   [
+                                    'ACCESS_TOKEN'=>'',
+                                    'WEB_API_URL'=>'https://sample.com/api.php',
+                                   ]);
+        $file = $this->getDataFolder().'messages.ini';
+        if(!file_exists($file)){
+            $this->makeMessageFile($file); //メッセージファイル
+        }
+        $useApi = $this->getSettingData('USE_WEB_API'); //web api を使うかどうか
+        switch($useApi){
+            case 'on':
+            case 'true':
+            case 1:
+                $key = $this->getAccessKeys();
+                $this->api = new API($key['url'], $key['token']);
+                if(!$this->api->isOk()){
+                    $this->getLogger()->warning("§cYour \"web api\" is not working. Check your \"web api\"");
+                    $this->getLogger()->notice("§cServer will close...");
+                    $this->getServer()->close();
+                break;
+        }
         $this->loadGame();
     }
 
@@ -172,9 +194,17 @@ class main extends PluginBase implements Listener{
         return $array;
     }
 
-    public function getData(String $key){
+    public function getConfigData(string $key){
         if($this->config->exists($key)){
             return $this->config->get($key);
+        }else{
+            return false; 
+        }
+    }
+
+    public function getSettingData(string $key){
+        if($this->setting->exists($key)){
+            return $this->setting->get($key);
         }else{
             return false; 
         }
@@ -234,5 +264,10 @@ class main extends PluginBase implements Listener{
             default:
                 $return = false;
          }
+     }
+
+     public function getAccessKeys(){
+         $return = ['url'=>$this->getConfigData('WEB_API_URL'), 'token'=>$this->getConfigData('ACCSESS_TOKEN')];
+         return $return;
      }
 }

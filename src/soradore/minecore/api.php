@@ -21,11 +21,30 @@ use pocketmine\utils\Utils;
 
 class API{
 
-    define("WEB_API_URL", "https://sample.com/api.php");
-    define("WEB_API_TOKEN", "");
+    public function __construct(string $url,string $token){
+        $this->url = $url;
+        $this->token = $token;
+    }
+
+    public function isOk(){
+        $url = $this->url;
+        $result = Utils::postURL("{$url}?check=true", []);
+        switch($result){
+            case 'ok':
+            case 'true':
+            case 'success':
+                $return = true;
+                break;
+            default:
+                $return = false;
+        }
+        return $return;
+    }
 
     public function sendData(array $data){
-        Utils::postURL(WEB_API_URL.'?token='.WEB_API_TOKEN, $data);
+        $url = $this->url;
+        $token = $this->token; 
+        Utils::postURL("{$url}?token={$token}", $data);
     }
 }
        
